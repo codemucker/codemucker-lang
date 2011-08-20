@@ -23,7 +23,7 @@ import java.util.Map;
  */
 public class Interpolator {
 
-    public static CharSequence interpolate(final CharSequence input, final Map<String, String> vars) {
+    public static CharSequence interpolate(final CharSequence input, final Map<String, Object> vars) {
         if( input == null){
             return null;
         } else if( vars == null || vars.size() == 0 ){
@@ -42,7 +42,7 @@ public class Interpolator {
         }
     }
 
-    public static void interpolate(final Reader in, final Writer out, final Map<String, String> vars) throws IOException {
+    public static void interpolate(final Reader in, final Writer out, final Map<String, Object> vars) throws IOException {
         checkNotNull("inputReader", in);
         checkNotNull("outputWriter", out);
         new ReaderParser(in,out,vars).interpolate();
@@ -51,13 +51,13 @@ public class Interpolator {
     private static class ReaderParser {
         final Reader in;
         final Writer out;
-        final Map<String, String> vars;
+        final Map<String, Object> vars;
 
-        public ReaderParser(final Reader in, final Writer out, final Map<String, String> vars) {
+        public ReaderParser(final Reader in, final Writer out, final Map<String, Object> vars) {
             super();
             this.in = in;
             this.out = out;
-            this.vars = vars==null?new HashMap<String, String>():vars;
+            this.vars = vars==null?new HashMap<String, Object>():vars;
         }
 
         public void interpolate() throws IOException {
@@ -99,10 +99,10 @@ public class Interpolator {
                                         //we now have the whole tokenName
                                         final String varName = varNameBuf.toString().trim();
                                         if( vars.containsKey(varName)){
-                                            final String varVal = vars.get(varName);
+                                            final Object varVal = vars.get(varName);
                                             //only print out if there is content, else just leav the output empty
                                             if( varVal != null ){
-                                                out.write(varVal);
+                                                out.write(varVal.toString());
                                             }
                                         } else {
                                             //print the declaration as is

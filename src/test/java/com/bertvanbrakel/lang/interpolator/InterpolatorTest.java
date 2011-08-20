@@ -22,16 +22,16 @@ public class InterpolatorTest {
     @Test
     public void ensure_returns_null_with_null_input(){
         final Interpolator interpolator = new Interpolator();
-        final Map<String, String> vars = new HashMap<String, String>();
+        final Map<String, Object> vars = new HashMap<String, Object>();
         vars.put("x","value");
-        assertNull(interpolator.interpolate(null,new HashMap<String, String>()));
+        assertNull(interpolator.interpolate(null,new HashMap<String, Object>()));
         assertNull(interpolator.interpolate(null,vars));
     }
 
     @Test
     public void ensure_returns_orginal_input_when_using_null_and_empty_vars(){
         final Interpolator interpolator = new Interpolator();
-        final Map<String, String> vars = new HashMap<String, String>();
+        final Map<String, Object> vars = new HashMap<String, Object>();
 
         assertEquals("", interpolator.interpolate("",null));
         assertEquals("", interpolator.interpolate("",vars));
@@ -47,7 +47,7 @@ public class InterpolatorTest {
     @Test
     public void ensure_correctly_interpolates_input(){
         final Interpolator interpolator = new Interpolator();
-        final Map<String, String> vars = new HashMap<String, String>();
+        final Map<String, Object> vars = new HashMap<String, Object>();
         vars.put("food","apples");
         vars.put("and","oranges");
 

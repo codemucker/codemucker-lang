@@ -42,4 +42,11 @@ public class EqualsMatcher<T> extends TypeSafeMatcher<T>{
 		return EqualsBuilder.reflectionEquals(expect, item, exclude);
 	}
 
+	public static <T> EqualsMatcher<T> reflectionEquals(T expect) {
+		return new EqualsMatcher<T>(expect);
+	}
+
+	public static <T> EqualsMatcher<T> reflectionEqualsIgnoringFields(T expect, String[] ignoreFields) {
+		return new EqualsMatcher<T>(expect, ignoreFields);
+	}
 }
