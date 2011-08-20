@@ -9,7 +9,6 @@ import java.util.List;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-import org.hamcrest.generator.qdox.model.util.OrderedMap;
 
 /**
  * Matcher to match on a collections of objects. Configurable to take into account element order
@@ -50,7 +49,7 @@ public class IsCollectionOf<T> extends
     public IsCollectionOf(final CONTAINS contains, final ORDER order) {
         this(new ArrayList<Matcher<T>>(), contains, order);
     }
-    
+
     public IsCollectionOf(final Iterable<Matcher<T>> matchers,
             final CONTAINS contains, final ORDER order) {
         if (matchers == null) {
