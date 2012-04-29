@@ -22,14 +22,15 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Makes a class as threadsafe
+ * Marks a class as threadsafe
  */
 @Documented
 @Retention(RetentionPolicy.SOURCE)
 @Target({ ElementType.TYPE, ElementType.METHOD})
 public @interface ThreadSafe {
 
+	/**
+	 * Any special conditions attached to being threadsafe
+	 */
 	String caveats() default "";
-
-	String[] exceptMethods() default "";
 }

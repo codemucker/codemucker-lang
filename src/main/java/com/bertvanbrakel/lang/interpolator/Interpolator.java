@@ -38,7 +38,7 @@ import java.util.Map;
  */
 public class Interpolator {
 
-    public static CharSequence interpolate(final CharSequence input, final Map<String, Object> vars) {
+    public static CharSequence interpolate(final CharSequence input, final Map<String, ?> vars) {
         if( input == null){
             return null;
         } else if( vars == null || vars.size() == 0 ){
@@ -57,7 +57,7 @@ public class Interpolator {
         }
     }
 
-    public static void interpolate(final Reader in, final Writer out, final Map<String, Object> vars) throws IOException {
+    public static void interpolate(final Reader in, final Writer out, final Map<String, ?> vars) throws IOException {
         checkNotNull("inputReader", in);
         checkNotNull("outputWriter", out);
         new ReaderParser(in,out,vars).interpolate();
@@ -66,9 +66,9 @@ public class Interpolator {
     private static class ReaderParser {
         final Reader in;
         final Writer out;
-        final Map<String, Object> vars;
+        final Map<String, ?> vars;
 
-        public ReaderParser(final Reader in, final Writer out, final Map<String, Object> vars) {
+        public ReaderParser(final Reader in, final Writer out, final Map<String, ?> vars) {
             super();
             this.in = in;
             this.out = out;

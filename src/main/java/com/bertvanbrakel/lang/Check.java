@@ -74,12 +74,13 @@ public final class Check {
      * @throws NullPointerException
      *             if the value is null
      */
-    public static void checkNotNull(final String attName, final Object value)
+    public static <T> T checkNotNull(final String attName, final T value)
             throws NullPointerException {
         if (value == null) {
             throw new NullPointerException(String.format(
                     "Check failed. Expected non null value for '%s'", attName));
         }
+        return value;
     }
 
     /**
