@@ -18,7 +18,11 @@ package com.bertvanbrakel.lang;
 import java.util.Collection;
 
 public final class Check {
-
+	
+	public static void checkFailed(String msg){
+        throw new IllegalArgumentException(msg);
+	}
+	
     /**
      * Assert the given string is not null or blank where blank means the
      * trimmed string is zero length
@@ -163,9 +167,9 @@ public final class Check {
         }
     }
 
-    public static void checkTrue(final String attName, final Object attValue, final boolean b,
+    public static void checkTrue(final String attName, final Object attValue, final boolean expression,
             final String msg) {
-        if (!b) {
+        if (!expression) {
             throw new IllegalArgumentException(String.format(
                     "Check failed. Expected '%s' to be %s but was '%s'",
                     attName, msg, attValue));
