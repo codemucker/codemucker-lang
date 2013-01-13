@@ -16,7 +16,6 @@
 package com.bertvanbrakel.lang.matcher;
 
 import static java.util.Arrays.asList;
-import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -28,7 +27,7 @@ import java.util.List;
 import java.util.TreeSet;
 import java.util.Vector;
 
-import org.hamcrest.Matcher;
+import com.bertvanbrakel.lang.matcher.Matcher;
 import org.junit.Test;
 
 public class AListTest {
@@ -45,21 +44,6 @@ public class AListTest {
     	assertFalse(AList.ofStrings().inAnyOrder().containingOnly().matches(null));
     	assertFalse(AList.ofStrings().inOrder().containing().matches(null));
     	assertFalse(AList.ofStrings().inOrder().containingOnly().matches(null));
-    }
-
-    /**
-     * Given we have no matchers
-     * and the item we pass in to match against is not a list
-     * for each contains and order combination
-     * we should fail
-     */
-    @Test
-    public void test_no_matchers_not_a_collection() {
-        Object notList = new Object();
-        assertFalse(AList.of(Object.class).inAnyOrder().containing().matches(notList));
-    	assertFalse(AList.of(Object.class).inAnyOrder().containingOnly().matches(notList));
-    	assertFalse(AList.of(Object.class).inOrder().containing().matches(notList));
-    	assertFalse(AList.of(Object.class).inOrder().containingOnly().matches(notList));
     }
 
     /**
@@ -87,7 +71,7 @@ public class AListTest {
      */
     @Test
     public void test_no_matchers_non_empty_list_always_fails() {
-		for (final Collection<Object> list : getEmptyLists()) {
+		for (final Collection<String> list : getEmptyStringLists()) {
 	        list.add("myString");
 	        assertFalse(AList.ofStrings().inAnyOrder().containingOnly().matches(list));
 	    	assertFalse(AList.ofStrings().inOrder().containingOnly().matches(list));
@@ -103,7 +87,7 @@ public class AListTest {
      */
     @Test
     public void test_no_matchers_non_empty_list_should_always_pass() {
-    	for (final Collection<Object> list : getEmptyLists()) {
+    	for (final Collection<String> list : getEmptyStringLists()) {
     	    list.add("myString");
 	        assertTrue(AList.ofStrings().inAnyOrder().containing().matches(list));
 	        assertTrue(AList.ofStrings().inOrder().containing().matches(list));
@@ -120,7 +104,7 @@ public class AListTest {
     @Test
     public void test_same_num_matchers_same_order_always_pass() {
          
-        final Iterable<Matcher<String>> matchers = asList(equalTo("abc"),equalTo("123"),equalTo("xyz"));
+        final Iterable<Matcher<String>> matchers = AnInstance.equalToAll("abc","123","xyz");
         final Collection<Collection<String>> lists = getEmptyOrderPreservingLists();
         for( final Collection<String> list:lists){
             //ensure each list contains the items
@@ -141,7 +125,7 @@ public class AListTest {
      */
     @Test
     public void test_same_num_matchers_different_order() {
-        final List<Matcher<String>> matchers = asList(equalTo("abc"),equalTo("123"),equalTo("xyz"));
+        final List<com.bertvanbrakel.lang.matcher.Matcher<String>> matchers = AnInstance.equalToAll("abc","123","xyz");
         final Collection<Collection<String>> lists = getEmptyOrderPreservingLists();
         for( final Collection<String> list:lists){
             //ensure each list contains the items
@@ -165,7 +149,7 @@ public class AListTest {
      */
     @Test
     public void test_more_matchers_same_order() {
-        final List<Matcher<String>> matchers = asList(equalTo("abc"),equalTo("123"),equalTo("xyz"));
+        final List<Matcher<String>> matchers = AnInstance.equalToAll("abc","123","xyz");
         final Collection<Collection<String>> lists = getEmptyOrderPreservingLists();
         for( final Collection<String> list:lists){
             //ensure each list contains the items
@@ -186,7 +170,7 @@ public class AListTest {
      */
     @Test
     public void test_more_matchers_different_order_always_fail() {
-        final List<Matcher<String>> matchers = asList(equalTo("abc"),equalTo("123"),equalTo("xyz"));
+        final List<Matcher<String>> matchers = AnInstance.equalToAll("abc","123","xyz");
         final Collection<Collection<String>> lists = getEmptyOrderPreservingLists();
         for( final Collection<String> list:lists){
             //ensure each list contains the items
@@ -209,7 +193,7 @@ public class AListTest {
      */
     @Test
     public void test_less_matchers_same_order() {
-        final List<Matcher<String>> matchers = asList(equalTo("abc"),equalTo("123"));
+        final List<Matcher<String>> matchers = AnInstance.equalToAll("abc","123");
         final Collection<Collection<String>> lists = getEmptyOrderPreservingLists();
         for( final Collection<String> list:lists){
             //ensure each list contains the items
@@ -234,7 +218,7 @@ public class AListTest {
      */
     @Test
     public void test_less_matchers_different_order() {
-        final List<Matcher<String>> matchers = asList(equalTo("abc"),equalTo("123"));
+        final List<Matcher<String>> matchers =AnInstance.equalToAll("abc","123");
         final Collection<Collection<String>> lists = getEmptyOrderPreservingLists();
         for( final Collection<String> list:lists){
             //ensure each list contains the items
@@ -248,6 +232,9 @@ public class AListTest {
         }
     }
 
+    private  Collection<Collection<String>> getEmptyStringLists(){
+    	return getEmptyLists();
+    }
     /**
      * Return various modifiable empty list implementations. Used to test various list types to ensure we
      * don't rely on any particular list type in comparisons

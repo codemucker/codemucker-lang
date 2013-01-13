@@ -21,10 +21,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeMatcher;
-
 import com.bertvanbrakel.lang.annotation.ThreadSafe;
 
 /**
@@ -63,7 +59,7 @@ public class AList<T> {
 	 * A matcher which expects a list with only a single matching item
 	 * @return
 	 */
-	public static <T> Matcher<Iterable<T>> ofOnly(Matcher<T> matcher){
+	public static <T> IterableMatcher<T> ofOnly(Matcher<T> matcher){
 		return new AList<T>().inOrder().containingOnly().item(matcher);
 	}
 
@@ -93,49 +89,59 @@ public class AList<T> {
 	
 	public static class InOrder<T> {
 		
+		public IterableMatcher<T> containing(Matcher<T> matcher){
+			return containing().add(matcher);
+		}
 		/**
 		 * All matchers must match but additional items are ignored
 		 * @return
 		 */
-		public ListMatcher<T> containing(){
+		public IterableMatcher<T> containing(){
 			return new ListMatcher<T>(ListMatcher.CONTAINS.ALL,ListMatcher.ORDER.EXACT);
+		}
+		
+		public IterableMatcher<T> containingOnly(Matcher<T> matcher){
+			return containingOnly().add(matcher);
 		}
 		
 		/**
 		 * All items must be matches. Additional non matched items will cause a fail
 		 * @return
 		 */
-		public ListMatcher<T> containingOnly(){
+		public IterableMatcher<T> containingOnly(){
 			return new ListMatcher<T>(ListMatcher.CONTAINS.ONLY,ListMatcher.ORDER.EXACT);
 		}
 	}
 	
 	public static class AnyOrder<T>{
 		
+		public IterableMatcher<T> containing(Matcher<T> matcher){
+			return containing().add(matcher);
+		}
+		
 		/**
 		 * All matchers must match but additional items are ignored
 		 * @return
 		 */
-		public ListMatcher<T> containing(){
+		public IterableMatcher<T> containing(){
 			return new ListMatcher<T>(ListMatcher.CONTAINS.ALL,ListMatcher.ORDER.ANY);
+		}
+		
+		public IterableMatcher<T> containingOnly(Matcher<T> matcher){
+			return containingOnly().add(matcher);
 		}
 		
 		/**
 		 * All items must be matches. Additional non matched items will cause a fail
 		 * @return
 		 */
-		public ListMatcher<T> containingOnly(){
+		public IterableMatcher<T> containingOnly(){
 			return new ListMatcher<T>(ListMatcher.CONTAINS.ONLY,ListMatcher.ORDER.ANY);
 		}
 	}
 	
-	private static class EmptyMatcher<T> extends TypeSafeMatcher<Iterable<T>>
+	private static class EmptyMatcher<T> extends AbstractNotNullMatcher<Iterable<T>>
 	{
-		@Override
-		public void describeTo(Description desc) {
-	        desc.appendText("is empty");
-		}
-
 		@Override
 		public boolean matchesSafely(Iterable<T> actual) {
 			if( actual instanceof Collection){
@@ -145,8 +151,27 @@ public class AList<T> {
 		}
 	}
 	
+	public interface IterableMatcher<T> extends Matcher<Iterable<T>>{
+		/**
+	     * Add a matcher. Synonym for {@link #add(Matcher)}
+	     */
+		public IterableMatcher<T> add(final Matcher<T> matcher);
+		/**
+	     * Add a matcher. Synonym for {@link #add(Matcher)}
+	     */
+		public IterableMatcher<T> item(final Matcher<T> matcher);
+		/**
+	     * Add a matcher.
+	     */
+		public IterableMatcher<T> and(final Matcher<T> matcher);
+		/**
+	     * Add a list of matchers
+	     */
+		public IterableMatcher<T> items(final Iterable<? extends Matcher<T>> matchers); 
+	}
+	
 	@ThreadSafe(caveats="if no matchers are added once it's been handed off to the various threads")
-	public static class ListMatcher<T> extends TypeSafeMatcher<Iterable<T>> 
+	private final static class ListMatcher<T> extends AbstractNotNullMatcher<Iterable<T>> implements IterableMatcher<T>
 	{
 	    private final Collection<Matcher<T>> matchers = new ArrayList<Matcher<T>>();
 	    private final ORDER order;
@@ -185,33 +210,30 @@ public class AList<T> {
 	        this.order = order;
 	    }
 	    
-	    public ListMatcher<T> items(final Iterable<Matcher<T>> matchers) {
+	    @Override
+	    public ListMatcher<T> items(final Iterable<? extends Matcher<T>> matchers) {
 	        for( Matcher<T>matcher:matchers){
-	        	this.matchers.add(matcher);
+	        	add(matcher);
 	        }
 	        return this;
 	    }
 	    
-	    /**
-	     * Add a matcher. Synonym for {@link #add(Matcher)}
-	     *
-	     * @param matcher
-	     */
+	    @Override
 	    public ListMatcher<T> item(final Matcher<T> matcher) {
-	        add(matcher);
-	        return this;
+	    	return add(matcher);
 	    }
 	    
-	    /**
-	     * Add a matcher
-	     *
-	     * @param matcher
-	     */
+	    @Override
+	    public ListMatcher<T> and(final Matcher<T> matcher) {
+	        return add(matcher);
+	    }
+	    
+	    @Override
 	    public ListMatcher<T> add(final Matcher<T> matcher) {
 	        this.matchers.add(matcher);
 	        return this;
 	    }
-	
+	    
 	    @Override
 	    public boolean matchesSafely(final Iterable<T> actual) {
 	        // loop though each item in the actual list, and find a matching
@@ -263,12 +285,9 @@ public class AList<T> {
 	    
 	    @Override
 	    public void describeTo(final Description desc) {
-	        desc.appendText("contains " );
-	        desc.appendText( contains.toString().toLowerCase());
-	        desc.appendText( " in " );
-	        desc.appendText( order.toString().toLowerCase());
-	        desc.appendText( " order " );
-	        desc.appendList("[", ",", "]", matchers);
+	        desc.value("contains", contains.toString().toLowerCase());
+	        desc.value( "order ", order.toString().toLowerCase());
+	        desc.values("items", matchers);
 	    }
 	}
 }

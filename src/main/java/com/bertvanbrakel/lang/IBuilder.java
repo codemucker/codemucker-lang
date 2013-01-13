@@ -1,5 +1,5 @@
 package com.bertvanbrakel.lang;
 
-public interface IsBuilder<T> {
+public interface IBuilder<T> {
 	public T build();
 }

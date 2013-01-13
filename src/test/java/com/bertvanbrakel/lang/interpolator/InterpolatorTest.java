@@ -15,16 +15,13 @@
  */
 package com.bertvanbrakel.lang.interpolator;
 
-import static  com.bertvanbrakel.lang.Check.*;
-import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.*;
-import static org.junit.Assert.*;
-import static org.junit.Assume.*;
-import static org.junit.matchers.JUnitMatchers.*;
+import org.junit.Test;
 
 public class InterpolatorTest {
 
