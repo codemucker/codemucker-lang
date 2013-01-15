@@ -1,4 +1,4 @@
-package org.codemucker.lang.matcher;
+package org.codemucker.jmatch;
 
 public class NullDescription implements Description {
 

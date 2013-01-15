@@ -1,4 +1,4 @@
-package org.codemucker.lang.matcher;
+package org.codemucker.jmatch;
 
 public class NullMatchContext extends NullDescription implements MatchDiagnostics {
 

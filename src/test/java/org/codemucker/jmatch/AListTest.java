@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.codemucker.lang.matcher;
+package org.codemucker.jmatch;
 
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertFalse;
@@ -27,9 +27,9 @@ import java.util.List;
 import java.util.TreeSet;
 import java.util.Vector;
 
-import org.codemucker.lang.matcher.AList;
-import org.codemucker.lang.matcher.AnInstance;
-import org.codemucker.lang.matcher.Matcher;
+import org.codemucker.jmatch.AList;
+import org.codemucker.jmatch.AnInstance;
+import org.codemucker.jmatch.Matcher;
 import org.junit.Test;
 
 public class AListTest {
@@ -127,7 +127,7 @@ public class AListTest {
      */
     @Test
     public void test_same_num_matchers_different_order() {
-        final List<org.codemucker.lang.matcher.Matcher<String>> matchers = AnInstance.equalToAll("abc","123","xyz");
+        final List<org.codemucker.jmatch.Matcher<String>> matchers = AnInstance.equalToAll("abc","123","xyz");
         final Collection<Collection<String>> lists = getEmptyOrderPreservingLists();
         for( final Collection<String> list:lists){
             //ensure each list contains the items

@@ -1,4 +1,4 @@
-package org.codemucker.lang.matcher;
+package org.codemucker.jmatch;
 
 import com.google.common.collect.ImmutableCollection;
 import com.google.common.collect.ImmutableList;

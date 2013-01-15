@@ -1,4 +1,4 @@
-package org.codemucker.lang.matcher;
+package org.codemucker.jmatch;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

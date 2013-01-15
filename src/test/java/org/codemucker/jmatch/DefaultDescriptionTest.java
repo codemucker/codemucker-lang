@@ -1,10 +1,10 @@
-package org.codemucker.lang.matcher;
+package org.codemucker.jmatch;
 
 import java.util.List;
 
-import org.codemucker.lang.matcher.DefaultDescription;
-import org.codemucker.lang.matcher.Description;
-import org.codemucker.lang.matcher.SelfDescribing;
+import org.codemucker.jmatch.DefaultDescription;
+import org.codemucker.jmatch.Description;
+import org.codemucker.jmatch.SelfDescribing;
 import org.junit.Test;
 
 import com.google.common.collect.Lists;
