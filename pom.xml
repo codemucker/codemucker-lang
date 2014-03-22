@@ -2,42 +2,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.bertvanbrakel</groupId>
-        <artifactId>bertvanbrakel-parent</artifactId>
+        <groupId>org.codemucker</groupId>
+        <artifactId>codemucker-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
+        <relativePath>../bertvanbrakel-parent/pom.xml</relativePath>
     </parent>
-    <groupId>com.bertvanbrakel</groupId>
-    <artifactId>bertvanbrakel-lang</artifactId>
+    <groupId>org.codemucker</groupId>
+    <artifactId>codemucker-lang</artifactId>
     <packaging>jar</packaging>
-    <name>com.bertvanbrakel - Language Extensions</name>
+    <name>org.codemucker - Language Extensions</name>
     <description>Bucket library to hold a number of often replicated code snippets</description>
     <dependencies>
         <dependency>
-			<groupId>org.hamcrest</groupId>
-			<artifactId>hamcrest-all</artifactId>
-			<version>1.1</version>
-		</dependency>
-        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.8.2</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>junit-addons</groupId>
-            <artifactId>junit-addons</artifactId>
-            <version>1.4</version>
-            <scope>test</scope>
-        </dependency>
-		<dependency>
-		    <groupId>org.apache.commons</groupId>
-		    <artifactId>commons-lang3</artifactId>
-		    <version>3.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>13.0.1</version>
-		</dependency>
-</dependencies>
+    </dependencies>
 </project>
