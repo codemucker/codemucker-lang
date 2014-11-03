@@ -1,22 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <parent>
-        <groupId>org.codemucker</groupId>
-        <artifactId>codemucker-parent</artifactId>
-        <version>1.0-SNAPSHOT</version>
-        <relativePath>../codemucker-parent/pom.xml</relativePath>
-    </parent>
-    <groupId>org.codemucker</groupId>
-    <artifactId>codemucker-lang</artifactId>
-    <packaging>jar</packaging>
-    <name>org.codemucker - Language Extensions</name>
-    <description>Bucket library to hold a number of often replicated code snippets</description>
-    <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.codemucker</groupId>
+		<artifactId>codemucker-parent</artifactId>
+		<version>1.0-SNAPSHOT</version>
+		<relativePath>../codemucker-parent/pom.xml</relativePath>
+	</parent>
+	<groupId>org.codemucker</groupId>
+	<artifactId>codemucker-lang</artifactId>
+	<packaging>jar</packaging>
+	<name>org.codemucker - Language Extensions</name>
+	<description>Bucket library to hold a number of often replicated code snippets</description>
+	<properties>
+		<java.src.version>1.6</java.src.version>
+		<java.target.version>1.6</java.target.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 </project>
