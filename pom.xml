@@ -8,7 +8,6 @@
 		<version>1.0-SNAPSHOT</version>
 		<relativePath>../codemucker-parent/pom.xml</relativePath>
 	</parent>
-	<groupId>org.codemucker</groupId>
 	<artifactId>codemucker-lang</artifactId>
 	<packaging>jar</packaging>
 	<name>org.codemucker - Language Extensions</name>
