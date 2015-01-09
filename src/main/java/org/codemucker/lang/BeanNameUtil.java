@@ -3,8 +3,7 @@ package org.codemucker.lang;
 public class BeanNameUtil {
 
 	public static String toSetterName(String name) {
-		name = stripPrefix(name);
-		return "set" + ClassNameUtil.upperFirstChar(name);
+		return addPrefixName("set",name);
 	}
 
 	public static String toGetterName(String name, java.lang.reflect.Type type) {
@@ -18,9 +17,14 @@ public class BeanNameUtil {
 
 	public static String toGetterName(String name, boolean isBoolean) {
 		name = stripPrefix(name);
-		return (isBoolean ? "is" : "get") + ClassNameUtil.upperFirstChar(name);
+		return addPrefixName((isBoolean ? "is" : "get"),name);
 	}
 
+	public static String addPrefixName(String prefix,String name) {
+		name = stripPrefix(name);
+		return prefix + ClassNameUtil.upperFirstChar(name);
+	}
+	
 	/**
 	 * Strips the get/set/is prefix from a method name 
 	 * 
@@ -40,13 +44,53 @@ public class BeanNameUtil {
 	 * @return
 	 */
 	public static String stripPrefix(String name) {
-		if (name.startsWith("get") || name.startsWith("set") && (name.length() > 3  && Character.isUpperCase(name.charAt(4)))) {
+		if ((name.startsWith("get") || name.startsWith("set")) && (name.length() > 3  && Character.isUpperCase(name.charAt(3)))) {
 			return name.substring(3);
 		}
-		if (name.startsWith("is") && name.length() > 2 && Character.isUpperCase(name.charAt(3))) {
+		if (name.startsWith("is") && name.length() > 2 && Character.isUpperCase(name.charAt(2))) {
 			return name.substring(2);
 		}
 		return name;
 	}
+
+
+	public static String extractIndexedKeyType(String fullType) {
+		//eg ..Map or ..Map<String,Bar>  or ..Map<String,Bar<T,Foo>>
+		int first = fullType.indexOf('<');
+		if (first != -1) {
+			int last = fullType.indexOf(',', first);
+			if(last !=-1){
+				return fullType.substring(first + 1, last);
+			} else {
+				return null;//have a generic part but not enough generic params for a key
+			}
+		} else {
+			return "java.lang.Object";
+		}
+	}
+
+	public static String extractIndexedValueType(String fullType) {
+		//eg .. List or ..List<String>  or ..List<Bar<T,Foo>> or ..Map or ..Map<String,Bar>  or ..Map<String,Bar<T,Foo>>
+		int first = fullType.indexOf('<');
+		if (first != -1) {
+			int angle = fullType.indexOf('<', first+1);
+			int comma = fullType.indexOf(',', first+1);
+			if( angle !=-1 || comma != -1){
+				if(angle == -1){
+					first = comma; 
+				} else if( comma == -1){
+					first = angle;
+				} else if( angle < comma){
+					first = angle;
+				} else {
+					first = comma;
+				}
+			}
+			int last = fullType.lastIndexOf('>');
+			return fullType.substring(first + 1, last);
+		}
+		return "java.lang.Object";
+	}
+    
 
 }
