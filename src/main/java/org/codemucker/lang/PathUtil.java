@@ -66,6 +66,23 @@ public class PathUtil {
     }
 
     /**
+     * Ensure the given path can only be a child path, so no absolute paths (C:\, /,//), no path up expressions (../)
+     * @param relPath
+     */
+    public static void validateIsSafeChildPathOnly(String relPath) {
+        if (relPath == null) {
+            throw new IllegalArgumentException("Invalid relative path. Expected not null");
+        }
+        char c;
+        for (int i = 0; i < relPath.length(); i++) {
+            c = relPath.charAt(i);
+            if (c == '|' || c == ';' || (c == '.' && i + 1 < relPath.length() && relPath.charAt(i + 1) == '.')) {
+                throw new IllegalArgumentException("Invalid relative path '" + relPath + "'");
+            }
+        }
+    }
+    
+    /**
      * Create a new temporary directory within the given base dir, using the given name as part of the directory name
      *
      * @param baseDir
