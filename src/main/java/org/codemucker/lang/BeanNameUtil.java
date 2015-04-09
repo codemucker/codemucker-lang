@@ -24,7 +24,39 @@ public class BeanNameUtil {
 		name = stripPrefix(name);
 		return prefix + ClassNameUtil.upperFirstChar(name);
 	}
+
+	/**
+	 * Best effort basis to convert the given method name to a property name
+	 * 
+	 * <p>
+	 * <ul>
+	 * 	<li>setFoo --&gt; foo</li>
+	 * 	<li>Foo --&gt; foo</li>
+	 *  <li>F --&gt; f</li>
+	 *  <li>setFOO --&gt; fOO</li>
+	 * </ul>
+	 * </p>
+	 */
+	public static String methodToPropertyName(String name) {
+		return lowerFirst(stripPrefix(name));
+	}
 	
+	/**
+	 * Best effort basis to convert the given method name to a property name
+	 */
+	public static String fieldToPropertyName(String name) {
+		return lowerFirst(name);
+	}
+	
+	public static String lowerFirst(String name) {
+		if(name.length() > 1){
+			name = Character.toLowerCase(name.charAt(0)) + name.substring(1);		
+		} else if(name.length() == 1){
+			name = Character.toLowerCase(name.charAt(0)) + "";		
+		}
+		return name;
+	}
+
 	/**
 	 * Strips the get/set/is prefix from a method name 
 	 * 
