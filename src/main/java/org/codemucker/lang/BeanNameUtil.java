@@ -88,6 +88,7 @@ public class BeanNameUtil {
 
 	public static String extractIndexedKeyType(String fullType) {
 		//eg ..Map or ..Map<String,Bar>  or ..Map<String,Bar<T,Foo>>
+		//return the 2nd generic arg
 		int first = fullType.indexOf('<');
 		if (first != -1) {
 			int last = fullType.indexOf(',', first);
