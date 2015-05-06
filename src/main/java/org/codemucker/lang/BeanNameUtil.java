@@ -64,7 +64,7 @@ public class BeanNameUtil {
 	 * 
 	 * <p>Examples:
 	 * 	<ul>
-	 * 		<li>getFoo,setFoo,isFoo --%gt;  'Foo'
+	 * 		<li>getFoo,setFoo,isFoo --&gt;  'Foo'
 	 * 		<li>gettyburg --&gt; gettyburg (unchanged)
 	 * 		<li>iso --&gt; iso (unchanged)
 	 * 		<li>getIso--&gt; iso
